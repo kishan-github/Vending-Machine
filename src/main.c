@@ -80,7 +80,7 @@ int display_menu()
         int scan=1;                                                                
                                                                                    
         printf("Enter currency notes\n");                                       
-//        fflush(stdin);                                                          
+        fflush(stdin);                                                          
         scan = scanf("%d",&curr);                                               
         printf("\n\n\n value of scan = %d",curr);                               
  /*       if(scan==0)                                                             
