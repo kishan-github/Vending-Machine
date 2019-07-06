@@ -21,7 +21,7 @@ LFLAGS = -L../lib
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
 #   option, something like (this will link in libmylib.so and libm.so:
-LIBS = -lmylib -lm
+LIBS = -lm
 
 # define the C source files
 SRCS = main.c
@@ -40,17 +40,17 @@ OBJS = $(SRCS:.c=.o)
 MAIN = mycc
 
 all:    $(MAIN)
-        @echo  Simple compiler named mycc has been compiled
+	@echo  Simple compiler named mycc has been compiled
 
 $(MAIN): $(OBJS) 
-        $(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
 # (see the gnu make manual section about automatic variables)
 .c.o:
-        $(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-        $(RM) *.o *~ $(MAIN)
+	$(RM) *.o *~ $(MAIN)
