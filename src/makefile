@@ -23,8 +23,14 @@ LFLAGS = -L../lib
 #   option, something like (this will link in libmylib.so and libm.so:
 LIBS = -lm
 
+# put all the .o files in obj folder
+OBJDIR = ../obj/
+
+# put the exe file in bin folder
+BIN = ../bin/
+
 # define the C source files
-SRCS = main.c
+SRCS = main.c data.c
 
 # define the C object files 
 #
@@ -34,12 +40,12 @@ SRCS = main.c
 # Below we are replacing the suffix .c of all words in the macro SRCS
 # with the .o suffix
 #
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:%.c=$(OBJDIR)%.o)
 
 # define the executable file 
-MAIN = mycc
+MAIN = $(BIN)mycc
 
-all:    $(MAIN)
+all:  $(MAIN)
 	@echo  Simple compiler named mycc has been compiled
 
 $(MAIN): $(OBJS) 
@@ -49,8 +55,8 @@ $(MAIN): $(OBJS)
 # it uses automatic variables $<: the name of the prerequisite of
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
 # (see the gnu make manual section about automatic variables)
-.c.o:
+$(OBJDIR)%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) *.o *~ $(MAIN)
+	$(RM) $(OBJDIR)*.o *~ $(BIN)$(MAIN)
