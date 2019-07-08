@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>                                                                 
-#include<stdbool.h>                                                                
+#include<stdbool.h>
+#include<data.h>                                                               
                                                                                    
 enum currency {                                                                    
         TWOTHOUSAND,                                                               
@@ -15,6 +16,14 @@ enum currency {
                                                                                    
 char temp_db[MAX];                                                                 
 char base_db[MAX];                                                                 
+
+extern int no_of_notes[DENOMINATION_MAX];
+
+void init_data()
+{
+	// initialize no of notes of each currency
+	init_no_of_notes();
+}
 
 void disp_item_menu(int total, int temp_total)
 {
@@ -95,7 +104,7 @@ int display_curr_menu()
         char ch;                                                                   
         int i;                                                                     
         int scan=1;                                                                
-                                                                                   
+		
         printf("Enter currency notes\n");                                       
         scan = scanf("%d",&curr);                                               
         res = validate_currency(curr);                                          
@@ -117,7 +126,16 @@ int display_curr_menu()
         }                                                                       
 }                                                                               
 int main()                                                                      
-{                                                                               
+{
+	printf("\n **************************************************** \n");
+	printf("\n *                                                  * \n");
+	printf("\n *        Welcome to the vending mechine            * \n");
+	printf("\n *                                                  * \n");
+	printf("\n **************************************************** \n");
+	
+	// initialize all the data first
+	init_data();
+	
         int total;                                                                 
         total = display_curr_menu();                                                    
         printf("\nexit code = %d",total);                                         

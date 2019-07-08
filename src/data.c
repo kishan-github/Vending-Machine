@@ -1,4 +1,16 @@
-#include <data.h>
+#include<data.h>
+
+// Array to store no of notes of each denomination
+int no_of_notes[DENOMINATION_MAX];
+
+// initialize no of notes of each type
+void init_no_of_notes()
+{
+	int index = 0;
+	
+	for(; index < DENOMINATION_MAX; index++)
+		no_of_notes[index] = INITIAL_NOTES;
+}
 
 // get no of notes for specified note type
 int get_no_of_notes(note_type_e note)
