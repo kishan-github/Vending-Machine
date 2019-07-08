@@ -16,9 +16,15 @@ enum currency {
 char temp_db[MAX];                                                                 
 char base_db[MAX];                                                                 
 
-void disp_item_menu()
+void disp_item_menu(int total, int temp_total)
 {
-	printf("This is the item menu");
+	printf("\n\n*#*#*#*#*WELCOME#*#*#*#*#*\n\n");
+
+	if(temp_total<total)
+	{
+		printf("You have Rs. %d left, please select accordingly :-)\nChoose from below options!!!\n\n1. Item @Rs.10\n2. Item @Rs.20\n3. Item @Rs.30\n4. Item @Rs.40",temp_total);
+		temp_total = temp_total + 10;
+	}
 }
 
 bool validate_currency(int curr)                                                   
@@ -70,8 +76,19 @@ void populate_temp_db()
         {                                                                          
                 temp_db[i]=temp_db[i] + base_db[i];                                
         }                                                                          
-}                                                                                  
-int display_menu()
+}
+
+int get_temp_db_value()
+{
+	return 100;
+}
+
+int update_temp_db(int curr)
+{
+	printf("\ninside update db, db updated!!!\n");
+}
+
+int display_curr_menu()
 {                                                                                  
         int curr=0;                                                                
         bool res;                                                                  
@@ -80,49 +97,39 @@ int display_menu()
         int scan=1;                                                                
                                                                                    
         printf("Enter currency notes\n");                                       
-        fflush(stdin);                                                          
         scan = scanf("%d",&curr);                                               
-        printf("\n\n\n value of scan = %d",curr);                               
- /*       if(scan==0)                                                             
-        {                                                                       
-               printf("Invalid Currency note inserted, retry\n");               
-               curr = 0;                                                        
-               return 10;                                                       
-               display_menu();                                                  
-        }                                                                       
-        //fflush(stdin);                                                        
         res = validate_currency(curr);                                          
         if(!res)                                                                
         {                                                                       
                 curr = 0;                                                       
                 printf("Invalid Currency note inserted, retry\n");              
-                display_menu();                                                 
+                display_curr_menu();                                                 
         }                                                                       
         else                                                                    
-        {                                                                       
+        {    
+		update_temp_db(curr);
                 printf("Rs. %d note received, Do you want to enter more? (Y/N)\n",curr);
                 scanf(" %c",&ch);                                               
-                //fflush(stdin);                                                
-                if(ch == 'Y')                                                   
-                        display_menu();                                         
+                if(ch == 'Y' | ch =='y')                                                   
+                        display_curr_menu();                                         
                 else                                                            
-                        printf("Proceeding to item menu");                      
-                        disp_item_menu();                                       
+                        return get_temp_db_value();                                       
         }                                                                       
-   */                                                                             
-        return curr;                                                            
 }                                                                               
 int main()                                                                      
 {                                                                               
-        int ch;                                                                 
-        ch = display_menu();                                                    
-        printf("\nexit code = %d",ch);                                         
+        int total;                                                                 
+        total = display_curr_menu();                                                    
+        printf("\nexit code = %d",total);                                         
+
+	disp_item_menu(total,0);
                          /*                                                       
         int i = 0;                                                              
         for (i;i<MAX;i++)                                                       
         {                                                                       
                 printf("value of temp[%d] = %d\n",i,temp_db[i]);                
         }                                                                       
-                           */                                                     
+                           */                                                    
+	getch();
         return 0;                                                               
 }
