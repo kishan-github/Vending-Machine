@@ -4,8 +4,8 @@
 #include<stdbool.h>
 #include<data.h>                                                               
 
-extern int no_of_notes[DENOMINATION_MAX];
 extern int no_of_notes_user[DENOMINATION_MAX];
+extern item_list_e item[];
 
 void init_data()
 {
@@ -13,15 +13,74 @@ void init_data()
 	init_no_of_notes();
 }
 
+void disp_items()
+{
+	int i = 0;
+	printf("\n----------------------------------------------------------------\n");
+	printf("\n Item Name  Item Code  Item Price Item quantity\n");
+	for(; i < MAX_ITEMS; i++)
+	{
+		printf("\n %s  %d  %d  %d \n", item[i].name, item[i].code, item[i].price, item[i].quantity);
+	}
+	printf("\n----------------------------------------------------------------\n");
+}
+
 void disp_item_menu(int total, int temp_total)
 {
-	printf("\n\n*#*#*#*#*WELCOME#*#*#*#*#*\n\n");
+	int user_items[50];
+	int user_input = 0;
+	int i = 0;
+	item_list_e *item_handle = NULL;
+	int remaining_balance = total;
 
-	if(temp_total<total)
+	disp_items();
+
+	printf("\nStart entering the item code of the item you want to buy.\n");
+	printf("\nPress 0 anytime in between to finish your purchase.\n");
+
+	while(true)
 	{
-		printf("You have Rs. %d left, please select accordingly :-)\nChoose from below options!!!\n\n1. Item @Rs.10\n2. Item @Rs.20\n3. Item @Rs.30\n4. Item @Rs.40",temp_total);
-		temp_total = temp_total + 10;
+		printf("\nEnter item code : ");
+		if(scanf("%d",&user_input) != 1)
+		{
+			printf("\nERROR : Non numeric value encountered\n");
+			fflush(stdin);
+			continue;
+		}
+		else if(user_input >= ITEM_CODE_MAX)
+		{
+			printf("\nERROR : Wrong item code.\n");
+			continue;
+		}
+
+		if(user_input == 0)
+			break;
+
+		item_handle = get_item_handle(user_input);
+		if(!item_handle)
+		{
+			printf("\nERROR : Something went wrong..... Please try again\n");
+			continue;
+		}
+
+		if(!check_item_availability(item_handle))
+		{
+			printf("\nERROR : Selected item is out of stock.\n");
+			continue;
+		}
+
+		if(get_item_price(item_handle) > remaining_balance)
+		{
+			printf("\nERROR : Selected item price is more than the remaining balance. Please select other item within remaining balance\n");
+			continue;
+		}
+
+		user_items[i] = user_input;
+		update_item_quantity(&item_handle);
+		i++;
 	}
+
+	printf("\nBalnce remaining after purchasing is = %d\n", remaining_balance);
 }
 
 int display_curr_menu()
@@ -80,7 +139,7 @@ int main()
 	total = display_curr_menu();
 	printf("\nexit code = %d",total);
 
-	//disp_item_menu(total,0);
+	disp_item_menu(total,0);
                          /*
 	int i = 0;
 	for (i;i<MAX;i++)
