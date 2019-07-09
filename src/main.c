@@ -1,23 +1,11 @@
 #include<stdio.h>
+#include<conio.h>
 #include<string.h>                                                                 
 #include<stdbool.h>
 #include<data.h>                                                               
-                                                                                   
-enum currency {                                                                    
-        TWOTHOUSAND,                                                               
-        FIVEHUNDRED,                                                               
-        TWOHUNDRED,                                                                
-        HUNDRED,                                                                   
-        FIFTY,                                                                     
-        TWENTY,                                                                    
-        TEN,                                                                       
-        MAX                                                                        
-} notes;                                                                           
-                                                                                   
-char temp_db[MAX];                                                                 
-char base_db[MAX];                                                                 
 
 extern int no_of_notes[DENOMINATION_MAX];
+extern int no_of_notes_user[DENOMINATION_MAX];
 
 void init_data()
 {
@@ -36,94 +24,46 @@ void disp_item_menu(int total, int temp_total)
 	}
 }
 
-bool validate_currency(int curr)                                                   
-{                                                                                  
-        bool res;                                                                  
-        int value;                                                                 
-        switch(curr)                                                               
-        {                                                                          
-        case 2000:                                                                 
-                res = true;                                                        
-                value = TWOTHOUSAND;                                               
-                break;                                                             
-        case 500:                                                                  
-                res = true;                                                        
-                value = FIVEHUNDRED;                                               
-                break;                                                             
-        case 200:                                                                  
-                res = true;                                                        
-                value = TWOHUNDRED;                                                
-                break;                                                             
-        case 100:                                                                  
-                res = true;                                                        
-                value = HUNDRED;                                                   
-                break;                                                             
-        case 50:                                                                   
-                res = true;                                                        
-                value = FIFTY;                                                     
-                break;                                                             
-        case 20:                                                                   
-                res = true;                                                        
-                value = TWENTY;                                                    
-                break;                                                             
-        case 10:                                                                   
-                res = true;                                                        
-                value = TEN;                                                       
-                break;                                                             
-        default:                                                                   
-                res = false;                                                       
-                break;                                                             
-        }                                                                          
-        temp_db[value]++;                                                          
-        return res;                                                                
-}                                                                                  
-                                                                                   
-void populate_temp_db()                                                                 
-{                                                                                  
-        int i = 0;                                                                 
-        for(i;i++;i<MAX)                                                           
-        {                                                                          
-                temp_db[i]=temp_db[i] + base_db[i];                                
-        }                                                                          
-}
-
-int get_temp_db_value()
-{
-	return 100;
-}
-
-int update_temp_db(int curr)
-{
-	printf("\ninside update db, db updated!!!\n");
-}
-
 int display_curr_menu()
 {                                                                                  
-        int curr=0;                                                                
-        bool res;                                                                  
-        char ch;                                                                   
-        int i;                                                                     
-        int scan=1;                                                                
+	int user_input = 0;
+	note_type_e input_note = DENOMINATION_MAX;
+	int total_amount = 0;
+
+	printf("\nStart entering notes in denomination of :\n");
+	printf("\n Rs 10 \n Rs 20 \n Rs 50 \n Rs 100 \n Rs 500 \n Rs 1000 \n");
+	printf("\nYou can stop anytime by entering '0'\n");
+
+	while(true)
+	{
+		printf("\nEnter currency notes : ");
+		if(scanf("%d",&user_input) != 1)
+		{
+			printf("\nERROR : Non numeric value encountered\n");
+			fflush(stdin);
+			continue;
+		}
+
+		if(user_input == 0)
+			break;
 		
-        printf("Enter currency notes\n");                                       
-        scan = scanf("%d",&curr);                                               
-        res = validate_currency(curr);                                          
-        if(!res)                                                                
-        {                                                                       
-                curr = 0;                                                       
-                printf("Invalid Currency note inserted, retry\n");              
-                display_curr_menu();                                                 
-        }                                                                       
-        else                                                                    
-        {    
-		update_temp_db(curr);
-                printf("Rs. %d note received, Do you want to enter more? (Y/N)\n",curr);
-                scanf(" %c",&ch);                                               
-                if(ch == 'Y' | ch =='y')                                                   
-                        display_curr_menu();                                         
-                else                                                            
-                        return get_temp_db_value();                                       
-        }                                                                       
+		input_note = map_user_input_to_enum(user_input);
+
+		if(input_note == DENOMINATION_MAX)
+		{
+			printf("\nERROR : Denomination type is note correct\n");
+		}
+		else
+		{
+			total_amount += user_input;
+			no_of_notes_user[input_note]++;
+			printf("\nAmount Entered = %d . Total Amount = %d\n", user_input, total_amount);
+		}
+
+	}
+
+	printf("\n\n\nTotal amount entered by you = %d\n", total_amount);
+	return total_amount;
 }                                                                               
 int main()                                                                      
 {
@@ -136,18 +76,18 @@ int main()
 	// initialize all the data first
 	init_data();
 	
-        int total;                                                                 
-        total = display_curr_menu();                                                    
-        printf("\nexit code = %d",total);                                         
+	int total;
+	total = display_curr_menu();
+	printf("\nexit code = %d",total);
 
-	disp_item_menu(total,0);
-                         /*                                                       
-        int i = 0;                                                              
-        for (i;i<MAX;i++)                                                       
-        {                                                                       
-                printf("value of temp[%d] = %d\n",i,temp_db[i]);                
-        }                                                                       
-                           */                                                    
+	//disp_item_menu(total,0);
+                         /*
+	int i = 0;
+	for (i;i<MAX;i++)
+	{
+			printf("value of temp[%d] = %d\n",i,temp_db[i]);
+	}
+					   */
 	getch();
-        return 0;                                                               
+	return 0;
 }

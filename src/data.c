@@ -3,6 +3,9 @@
 // Array to store no of notes of each denomination
 int no_of_notes[DENOMINATION_MAX];
 
+// Array to store no of notes of each denomination entered by user
+int no_of_notes_user[DENOMINATION_MAX];
+
 // initialize no of notes of each type
 void init_no_of_notes()
 {
@@ -38,5 +41,19 @@ bool is_valid_note_type(note_type_e note)
 			 return true;
 		default :
 			return false;
+	}
+}
+
+note_type_e map_user_input_to_enum(int currency)
+{
+	switch(currency)
+	{
+		case 10 : return DENOMINATION_10;
+		case 20 : return DENOMINATION_20;
+		case 50 : return DENOMINATION_50;
+		case 100 : return DENOMINATION_100;
+		case 500 : return DENOMINATION_500;
+		case 1000 : return DENOMINATION_1000;
+		default : return DENOMINATION_MAX;
 	}
 }

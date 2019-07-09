@@ -14,11 +14,9 @@ typedef enum note_type
 	DENOMINATION_MAX
 }note_type_e;
 
-// Array to store no of notes of each denomination
-extern int no_of_notes[DENOMINATION_MAX];
-
 // function declaration
 void init_no_of_notes();
 int get_no_of_notes(note_type_e note);
 void set_no_of_notes(note_type_e note);
 bool is_valid_note_type(note_type_e note);
+note_type_e map_user_input_to_enum(int currency);
