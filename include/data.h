@@ -41,9 +41,12 @@ typedef struct item_list
 void init_no_of_notes();
 int get_no_of_notes(note_type_e note);
 void set_no_of_notes(note_type_e note);
+int return_notes_to_user(note_type_e note, int no_of_note);
 bool is_valid_note_type(note_type_e note);
+int map_enum_to_note(note_type_e note);
 note_type_e map_user_input_to_enum(int currency);
 item_list_e* get_item_handle(item_code_e code);
 bool check_item_availability(item_list_e *item);
 int get_item_price(item_list_e *item);
 void update_item_quantity(item_list_e **item);
+char* get_item_name(item_list_e *item);

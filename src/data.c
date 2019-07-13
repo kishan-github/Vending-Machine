@@ -38,6 +38,23 @@ void set_no_of_notes(note_type_e note)
 	no_of_notes[note]++;
 }
 
+// Return notes to user
+int return_notes_to_user(note_type_e note, int no_of_note)
+{
+	if(no_of_notes[note] > no_of_note)
+	{
+		no_of_notes[note] -= no_of_note;
+		no_of_note = 0;
+	}
+	else
+	{
+		no_of_note -= no_of_notes[note];
+		no_of_notes[note] = 0;
+	}
+
+	return no_of_note;
+}
+
 // check the validity of the currency note
 bool is_valid_note_type(note_type_e note)
 {
@@ -52,6 +69,20 @@ bool is_valid_note_type(note_type_e note)
 			 return true;
 		default :
 			return false;
+	}
+}
+
+int map_enum_to_note(note_type_e note)
+{
+	switch(note)
+	{
+		case DENOMINATION_10: return 10;
+		case DENOMINATION_20: return 20;
+		case DENOMINATION_50: return 50;
+		case DENOMINATION_100: return 100;
+		case DENOMINATION_500: return 500;
+		case DENOMINATION_1000: return 1000;
+		default :  return false;
 	}
 }
 
@@ -99,4 +130,9 @@ int get_item_price(item_list_e *item)
 void update_item_quantity(item_list_e **item)
 {
 	((*item)->quantity)--;
+}
+
+char* get_item_name(item_list_e *item)
+{
+	return item->name;
 }
