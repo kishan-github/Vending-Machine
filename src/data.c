@@ -118,7 +118,7 @@ bool check_item_availability(item_list_e *item)
 {
 	if(!item)
 	{
-		printf("NULL value received");
+		printf("%s : %d : NULL value received", __func__, __LINE__);
 		return false;
 	}
 
@@ -132,7 +132,7 @@ int get_item_price(item_list_e *item)
 {
 	if(!item)
 	{
-		printf("\nNULL value received");		
+		printf("%s : %d : NULL value received", __func__, __LINE__);
 		return FAILURE;
 	}
 
@@ -143,7 +143,7 @@ void update_item_quantity(item_list_e **item)
 {
 	if(!(*item))
 	{
-		printf("\nNULL value received\n");
+		printf("%s : %d : NULL value received", __func__, __LINE__);
 		return;
 	}
 
@@ -154,7 +154,7 @@ char* get_item_name(item_list_e *item)
 {
 	if(!item)
 	{
-		printf("\nNULL value received\n");
+		printf("%s : %d : NULL value received", __func__, __LINE__);
 		return NULL;
 	}
 	return item->name;
