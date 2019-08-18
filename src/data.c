@@ -116,6 +116,12 @@ item_list_e* get_item_handle(item_code_e code)
 
 bool check_item_availability(item_list_e *item)
 {
+	if(!item)
+	{
+		printf("NULL value received");
+		return false;
+	}
+
 	if(item->quantity > 0)
 		return true;
 	else
@@ -124,15 +130,32 @@ bool check_item_availability(item_list_e *item)
 
 int get_item_price(item_list_e *item)
 {
+	if(!item)
+	{
+		printf("\nNULL value received");		
+		return FAILURE;
+	}
+
 	return item->price;
 }
 
 void update_item_quantity(item_list_e **item)
 {
+	if(!(*item))
+	{
+		printf("\nNULL value received\n");
+		return;
+	}
+
 	((*item)->quantity)--;
 }
 
 char* get_item_name(item_list_e *item)
 {
+	if(!item)
+	{
+		printf("\nNULL value received\n");
+		return NULL;
+	}
 	return item->name;
 }

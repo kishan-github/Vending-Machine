@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<conio.h>
+//#include<conio.h>
 #include<string.h>                                                                 
 #include<stdbool.h>
 #include<data.h>                                                               
@@ -193,6 +193,6 @@ int main()
 			printf("value of temp[%d] = %d\n",i,temp_db[i]);
 	}
 					   */
-	getch();
+	getchar();
 	return 0;
 }

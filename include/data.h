@@ -3,6 +3,7 @@
 
 #define INITIAL_NOTES 10
 #define MAX_ITEMS 6
+#define FAILURE 0
 
 // enum to store the type of notes available
 typedef enum note_type
