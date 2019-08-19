@@ -1,4 +1,6 @@
 #include<data.h>
+#include<stddef.h>
+#include<stdio.h>
 
 // Array to store no of notes of each denomination
 int no_of_notes[DENOMINATION_MAX];
@@ -82,7 +84,7 @@ int map_enum_to_note(note_type_e note)
 		case DENOMINATION_100: return 100;
 		case DENOMINATION_500: return 500;
 		case DENOMINATION_1000: return 1000;
-		default :  return false;
+		default :  return 0;
 	}
 }
 

@@ -1,5 +1,4 @@
 #include<stdio.h>
-//#include<conio.h>
 #include<string.h>                                                                 
 #include<stdbool.h>
 #include<data.h>                                                               
@@ -183,16 +182,9 @@ int main()
 	
 	int total;
 	total = display_curr_menu();
-	printf("\nexit code = %d",total);
 
 	disp_item_menu(total,0);
-                         /*
-	int i = 0;
-	for (i;i<MAX;i++)
-	{
-			printf("value of temp[%d] = %d\n",i,temp_db[i]);
-	}
-					   */
+
 	getchar();
 	return 0;
 }

@@ -1,6 +1,4 @@
 #include<stdbool.h>
-#include<stddef.h>
-#include<stdio.h>
 
 #define INITIAL_NOTES 10
 #define MAX_ITEMS 6
