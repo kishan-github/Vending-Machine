@@ -2,6 +2,7 @@
 #include<string.h>                                                                 
 #include<stdbool.h>
 #include<data.h>                                                               
+#include<main.h>
 
 extern int no_of_notes_user[DENOMINATION_MAX];
 extern item_list_e item[];
@@ -82,13 +83,13 @@ void disp_item_menu(int total, int temp_total)
 		printf("\nEnter item code : ");
 		if(scanf("%d",&user_input) != 1)
 		{
-			printf("\nERROR : Non numeric value encountered\n");
-			fflush(stdin);
+			PRINT(ERR, "Non numeric value encountered");
+			while(getchar() != '\n');
 			continue;
 		}
 		else if(user_input >= ITEM_CODE_MAX)
 		{
-			printf("\nERROR : Wrong item code.\n");
+			PRINT(ERR, "Wrong item code.");
 			continue;
 		}
 
@@ -98,19 +99,19 @@ void disp_item_menu(int total, int temp_total)
 		item_handle = get_item_handle(user_input);
 		if(!item_handle)
 		{
-			printf("\nERROR : Something went wrong..... Please try again\n");
+			PRINT(ERR, "Something went wrong..... Please try again");
 			continue;
 		}
 
 		if(!check_item_availability(item_handle))
 		{
-			printf("\nERROR : Selected item is out of stock.\n");
+			PRINT(ERR,"Selected item is out of stock.");
 			continue;
 		}
 
 		if(get_item_price(item_handle) > remaining_balance)
 		{
-			printf("\nERROR : Selected item price is more than the remaining balance. Please select other item within remaining balance\n");
+			PRINT(ERR,"Selected item price is more than the remaining balance. Please select other item within remaining balance");
 			continue;
 		}
 
@@ -143,8 +144,8 @@ int display_curr_menu()
 		printf("\nEnter currency notes : ");
 		if(scanf("%d",&user_input) != 1)
 		{
-			printf("\nERROR : Non numeric value encountered\n");
-			fflush(stdin);
+			PRINT(ERR, "Non numeric value encountered");
+			while(getchar() != '\n');
 			continue;
 		}
 
@@ -155,7 +156,7 @@ int display_curr_menu()
 
 		if(input_note == DENOMINATION_MAX)
 		{
-			printf("\nERROR : Denomination type is note correct\n");
+			PRINT(ERR, "Denomination type is note correct");
 		}
 		else
 		{
