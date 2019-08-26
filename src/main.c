@@ -35,21 +35,35 @@ void return_remaining_balance(int remaining_balance)
 	printf("\nPlease take back your remaining balance.\n");
 	for(; note > -1 ; note--)
 	{
+		if(!remaining_balance)
+			break;
+
 		no_of_notes = remaining_balance/map_enum_to_note(note);
 		if(!no_of_notes)
 			continue;
 
 		no_of_return_notes = no_of_notes;
-		no_of_notes -= no_of_notes_user[note];
-		no_of_notes_user[note] = 0;
 
-		if(no_of_notes)
-			no_of_notes = return_notes_to_user(note, no_of_notes);
+		if(no_of_notes < no_of_notes_user[note])
+		{
+			no_of_notes_user[note] -= no_of_notes;
+			no_of_notes = update_notes_in_database(note, no_of_notes_user[note], true);
+		}
+		else
+		{
+			no_of_notes -= no_of_notes_user[note];
+			no_of_notes_user[note] = 0;
+			no_of_notes = update_notes_in_database(note, no_of_notes, false);
+		}
 
 		remaining_balance -= ((no_of_return_notes - no_of_notes) * map_enum_to_note(note));
 
-		printf("\nNo of notes = %d of denomination = %d\n", no_of_return_notes - no_of_notes, map_enum_to_note(note));
+		if(no_of_return_notes - no_of_notes)
+			printf("\nNo of notes = %d of denomination = %d\n", no_of_return_notes - no_of_notes, map_enum_to_note(note));
 	}
+
+	if(remaining_balance)
+		printf("\nSorry not enough notes available in system\n");
 }
 
 void disp_items()
@@ -180,7 +194,7 @@ int main()
 	
 	// initialize all the data first
 	init_data();
-	
+
 	int total;
 	total = display_curr_menu();
 

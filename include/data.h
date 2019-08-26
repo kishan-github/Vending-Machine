@@ -50,3 +50,4 @@ bool check_item_availability(item_list_e *item);
 int get_item_price(item_list_e *item);
 void update_item_quantity(item_list_e **item);
 char* get_item_name(item_list_e *item);
+int update_notes_in_database(note_type_e note_t, int notes, bool is_update);

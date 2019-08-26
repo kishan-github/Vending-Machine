@@ -161,3 +161,26 @@ char* get_item_name(item_list_e *item)
 	}
 	return item->name;
 }
+
+// Update the no of notes in the database based on the requirement.
+int update_notes_in_database(note_type_e note_t, int notes, bool is_update)
+{
+	if(is_update)
+	{
+		no_of_notes[note_t] += notes;
+		return 0;
+	}
+	else
+	{
+		if(no_of_notes[note_t] >= notes)
+		{
+			no_of_notes[note_t] -= notes;
+			return 0;
+		}
+		else
+		{
+			notes -= no_of_notes[note_t];
+			return notes;
+		}
+	}
+}
